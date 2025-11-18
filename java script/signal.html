@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div{
+            margin-left: 200px;
+            height: 100px;
+            width: 100px;
+            border-radius: 50%;
+            border: 1px solid;
+        }
+        button{
+            margin: 10px;
+            height: 40px;
+            width: 120px;
+            background-color: black;
+            color: antiquewhite; 
+            border-radius: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="div1"></div>
+    <div id="div2"></div>
+    <div id="div3"></div>
+    <button id="btn1 " onclick="getstart()">STOP</button>
+    <button id="btn2 " onclick="getslow()">WAIT</button>
+    <button id="btn3 " onclick="getfast()">GO</button>
+
+
+
+    <script>
+        let a=document.getElementById("div1");
+        function getstart(params){
+            // a.innerHTML="hii from java script"
+            a.style.backgroundColor="red";
+        }
+
+         let b=document.getElementById("div2");
+        function getslow(params){
+            // a.innerHTML="hii from java script"
+            b.style.backgroundColor="yellow";
+        }
+
+
+         let c=document.getElementById("div3");
+        function getfast(params){
+            // a.innerHTML="hii from java script"
+            c.style.backgroundColor="green";
+        }
+
+
+    </script>
+</body>
+</html>

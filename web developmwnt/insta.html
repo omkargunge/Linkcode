@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Instagram Logo</title>
+  <style>
+    body {
+      background: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .insta-logo {
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle at 30% 100%, #feda75, #fa7e1e, #d62976, #962fbf, #4f5bd5);
+      border-radius: 50%;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .outer-ring {
+      width: 110px;
+      height: 110px;
+      border: 8px solid white;
+      border-radius: 20%;
+      position: absolute;
+    }
+
+    .inner-circle {
+      width: 60px;
+      height: 60px;
+      border: 8px solid white;
+      border-radius: 50%;
+      position: absolute;
+    }
+
+    .dot {
+      width: 20px;
+      height: 20px;
+      background: white;
+      border-radius: 50%;
+      position: absolute;
+      top: 50px;
+      right: 50px;
+      
+
+    }
+  </style>
+</head>
+<body>
+  <div class="insta-logo">
+    <div class="outer-ring"></div>
+    <div class="inner-circle"></div>
+    <div class="dot"></div>
+  </div>
+</body>
+</html>

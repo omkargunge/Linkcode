@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" name="" id="name" placeholder="enter first number">
+    <input type="text" name="" id="yourname" placeholder="enter second number">
+
+    <button onclick="addition()">+</button>
+    <button onclick="sub()">-</button>
+    <button onclick="mul()">*</button>
+    <button onclick="div()">/</button>
+    
+    
+
+    <h1></h1>
+    <h1 id="head"></h1>
+    <script>
+        var c=document.getElementById("head")
+        function addition(){
+            var a=document.getElementById("name").value;
+            var b=document.getElementById("yourname").value;
+        c.innerHTML=Number(a)+Number(b);
+        }
+        var c=document.getElementById("head")
+        function sub(){
+            var a=document.getElementById("name").value;
+            var b=document.getElementById("yourname").value;
+        c.innerHTML=Number(a)-Number(b);
+        }
+        var c=document.getElementById("head")
+        function mul(){
+            var a=document.getElementById("name").value;
+            var b=document.getElementById("yourname").value;
+        c.innerHTML=Number(a)*Number(b);
+        }
+        var c=document.getElementById("head")
+        function div(){
+            var a=document.getElementById("name").value;
+            var b=document.getElementById("yourname").value;
+        c.innerHTML=Number(a)/Number(b);
+        }
+    </script>
+</body>
+</html>

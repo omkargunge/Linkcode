@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>\
+    <style>
+        .child{
+
+            height: 100px;
+            width: 100px;
+            background-color: brown;
+            margin: 10px;
+            animation: move 8s infinite;
+            position: relative;
+        }
+        @keyframes move {
+            from{
+                left:0px;
+            }
+            to{
+                left: 1000px;
+            }
+        }
+
+        #child1{
+            animation-timing-function: ease;
+        }
+        #child2{
+            animation-timing-function: ease-in;
+        }
+        #child3{
+            animation-timing-function: ease-out;
+        }
+        #child4{
+            animation-timing-function: ease-in-out;
+        }
+    </style>
+</head>
+<body>
+   <div class="child" id="child1"></div>
+   <div class="child" id="child2"></div>
+   <div class="child" id="child3"></div>
+   <div class="child" id="child4"></div>
+</body>
+</html>

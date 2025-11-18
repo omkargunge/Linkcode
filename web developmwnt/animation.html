@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Smiley with Open Mouth</title>
+  <style>
+    body {
+      margin: 0;
+      background: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .face {
+      width: 200px;
+      height: 200px;
+      background: yellow;
+      border-radius: 50%;
+      position: relative;
+      box-shadow: 0 0 10px #aaa;
+    }
+
+    .eye {
+      width: 40px;
+      height: 40px;
+      background: white;
+      border-radius: 50%;
+      position: absolute;
+      top: 50px;
+      overflow: hidden;
+    }
+
+    .eye.left {
+      left: 40px;
+    }
+
+    .eye.right {
+      right: 40px;
+    }
+
+    .eyeball {
+      width: 20px;
+      height: 20px;
+      background: black;
+      border-radius: 50%;
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      animation: rotateEye 2s linear infinite;
+    }
+.eye.right{
+  right: 40px;
+  animation: eyeGrow 3s infinite alternate ease-in-out;
+  transform-origin: center;
+}
+.eye.left {
+      left: 40px;
+      animation: eyeGrow 2s infinite alternate ease-in-out;
+      transform-origin: center;
+    }
+@keyframes eyeGrow {
+      0%   { 
+        transform: scale(1); }
+      100% { 
+        transform: scale(1.6); }
+    }
+
+    @keyframes rotateBox {
+      0%   { 
+        transform: translate(-50%, -50%) rotate(0deg); }
+      100% { 
+        transform: translate(-50%, -50%) rotate(360deg); }
+  
+}
+    @keyframes rotateEye {
+      0%   { 
+        transform: translate(0px, 0px); }
+      25%  { 
+        transform: translate(10px, 0px); }
+      50%  { 
+        transform: translate(10px, 10px); }
+      75%  { 
+        transform: translate(0px, 10px); }
+      100% { 
+        transform: translate(0px, 0px); }
+    }
+
+    .mouth {
+      width: 60px;
+      height: 60px;
+      background: rgb(220, 22, 22);
+      border-radius: 12%;
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: openclose 1.2s infinite alternate ;
+    }
+   @keyframes
+    openclose {
+      0%   { 
+        height: 20px; 
+         }
+      100% { 
+        height: 50px; 
+        }
+    }
+  </style>
+</head>
+<body>
+  <div class="face">
+    <div class="eye left">
+      <div class="eyeball"></div>
+    </div>
+    <div class="eye right">
+      <div class="eyeball"></div>
+    </div>
+    <div class="mouth"></div>
+    
+  </div>
+</body>
+</html>

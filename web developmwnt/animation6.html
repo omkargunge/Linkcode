@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div{
+            height: 600px;
+            width: 600px;
+            display: flex;
+            border: 3px solid black;
+            border-radius: 50%;
+            justify-content: center;
+            background-image: conic-gradient(red 0deg 45deg,green 45deg 90deg,blue 90deg 135deg,orange 135deg 180deg,yellow 180deg 225deg,black 225deg 270deg,pink 270deg 315deg,skyblue 315deg 360deg);
+            animation: spin 5s infinite;
+        }
+        @keyframes spin {
+            from{
+                transform: rotate(0deg);
+            }
+            to{
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+        
+
+</head>
+<body>
+    <div></div>
+</body>
+</html>
