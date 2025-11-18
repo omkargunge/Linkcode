@@ -12,9 +12,9 @@ int main(){
 
     switch (ch1)
     {
-    case 1://rupee conversion
+    case 1://rupee convers
     rupee:
-        printf("\nenter your amount in rupee");
+        printf("\nenter your amount in rupeee");
         scanf("%f",&input);
 
         printf("\nenter your choice to convert");
