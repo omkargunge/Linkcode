@@ -14,7 +14,7 @@ int main(){
     {
     case 1://rupee convers
     rupee:
-        printf("\nenter your amount in rupeee");
+        printf("\nenter your amount in rupeeee");
         scanf("%f",&input);
 
         printf("\nenter your choice to convert");
