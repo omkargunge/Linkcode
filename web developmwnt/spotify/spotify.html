@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Spotify — Clone (HTML + CSS)</title>
+  <style>
+    /* Basic reset */
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      background: #121212;
+      color:#ddd;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    :root{
+      --sidebar:#040404;
+      --muted:#b3b3b3;
+      --accent:#1db954; /* spotify green */
+      --panel:#181818;
+      --glass: rgba(255,255,255,0.03);
+    }
+
+    /* Layout */
+    .app{
+      display:grid;
+      grid-template-columns: 220px 1fr;
+      grid-template-rows: 1fr 90px; /* main + player */
+      min-height:100vh;
+    }
+
+    /* Sidebar */
+    .sidebar{
+      grid-row:1/-1;
+      background: linear-gradient(180deg,var(--sidebar),#0b0b0b 70%);
+      padding:24px 16px;
+      border-right:1px solid rgba(255,255,255,0.03);
+      display:flex;
+      flex-direction:column;
+      gap:18px;
+    }
+
+    .logo{
+      font-weight:800;color:white;letter-spacing:1px;font-size:18px;display:flex;align-items:center;gap:10px
+    }
+    .logo .dot{width:28px;height:28px;border-radius:6px;background:linear-gradient(135deg,var(--accent),#10a37f);display:inline-block}
+
+    .nav{display:flex;flex-direction:column;gap:14px;margin-top:12px}
+    .nav a{display:flex;align-items:center;gap:12px;color:var(--muted);text-decoration:none;padding:8px;border-radius:6px}
+    .nav a:hover{color:white;background:rgba(255,255,255,0.03)}
+    .nav a svg{opacity:0.9}
+
+    .playlists{
+      margin-top:auto;overflow:auto;padding-top:12px;gap:10px;display:flex;flex-direction:column
+    }
+    .playlist{color:var(--muted);font-size:14px;text-decoration:none}
+
+    /* Main */
+    .main{padding:28px 32px;background:transparent;overflow:auto}
+
+    .topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
+    .search{display:flex;align-items:center;gap:12px;background:var(--panel);padding:8px 12px;border-radius:999px;width:360px}
+    .search input{background:transparent;border:0;outline:none;color:inherit;font-size:14px}
+
+    .user{display:flex;gap:12px;align-items:center}
+    .avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#666,#444);display:flex;align-items:center;justify-content:center;color:#fff}
+
+    /* Hero playlist header */
+    .hero{display:flex;gap:18px;align-items:end;margin-bottom:22px}
+    .cover{width:200px;height:200px;border-radius:8px;background:linear-gradient(135deg,#2b2b2b,#111);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:20px;color:#fff}
+    .playlist-meta{display:flex;flex-direction:column;gap:8px}
+    .meta-type{font-size:12px;color:var(--muted)}
+    .meta-title{font-size:48px;font-weight:800}
+    .meta-desc{color:var(--muted);max-width:640px}
+
+    .controls{display:flex;gap:12px;margin-top:8px;align-items:center}
+    .btn{background:var(--accent);color:#000;border:none;padding:12px 18px;border-radius:999px;font-weight:700;cursor:pointer}
+    .btn.secondary{background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,0.04);padding:10px 14px}
+
+    /* Tracks list */
+    .tracks{margin-top:10px;background:transparent;border-radius:8px;padding:8px}
+    .tracks .header{display:grid;grid-template-columns:40px 1fr 180px 90px;gap:12px;padding:10px 12px;color:var(--muted);font-size:13px}
+    .track{display:grid;grid-template-columns:40px 1fr 180px 90px;gap:12px;padding:12px;border-radius:6px;align-items:center}
+    .track:hover{background:rgba(255,255,255,0.02)}
+    .track .title{display:flex;gap:12px;align-items:center}
+    .thumb{width:40px;height:40px;border-radius:6px;background:linear-gradient(135deg,#6b6b6b,#333);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700}
+    .track .title .song{font-weight:600}
+    .track small{color:var(--muted);font-size:13px}
+
+    /* Albums grid */
+    .albums{margin-top:28px}
+    .albums h3{margin-bottom:12px}
+    .album-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:14px}
+    .album{background:linear-gradient(180deg,#1d1d1d,#121212);padding:12px;border-radius:8px}
+    .album .art{width:100%;padding-top:100%;border-radius:6px;background:linear-gradient(135deg,#7b2cff,#3a5cff);position:relative}
+    .album .meta{margin-top:10px}
+    .album .meta strong{display:block}
+    .album small{color:var(--muted)}
+
+    /* Player bar */
+    .player{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;padding:14px 18px;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);border-top:1px solid rgba(255,255,255,0.03)}
+    .player-left, .player-center, .player-right{display:flex;align-items:center;gap:12px}
+    .player .info{display:flex;gap:12px;align-items:center}
+    .progress{width:640px;height:6px;background:var(--glass);border-radius:999px;position:relative}
+    .progress .bar{height:100%;width:20%;background:var(--accent);border-radius:999px}
+
+    /* small screens */
+    @media (max-width:900px){
+      .app{grid-template-columns:1fr;grid-template-rows:auto 90px}
+      .sidebar{display:none}
+      .player .progress{width:240px}
+      .meta-title{font-size:28px}
+      .hero{align-items:flex-start}
+      .cover{width:120px;height:120px}
+    }
+
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="logo"><span class="dot"></span>SpotClone</div>
+
+      <nav class="nav">
+        <a href="#"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 9.5C3 7.01 5.01 5 7.5 5H16.5C18.99 5 21 7.01 21 9.5V14.5C21 16.99 18.99 19 16.5 19H7.5C5.01 19 3 16.99 3 14.5V9.5Z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg> Home</a>
+        <a href="#"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2v20M2 12h20" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg> Search</a>
+        <a href="#"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 7h16v10H4z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg> Your Library</a>
+      </nav>
+
+      <div class="playlists">
+        <a class="playlist">Liked Songs</a>
+        <a class="playlist">Chill Hits</a>
+        <a class="playlist">Discover Weekly</a>
+        <a class="playlist">Daily Mix 1</a>
+        <a class="playlist">Top 50 — Global</a>
+        <a class="playlist">Workout</a>
+        <a class="playlist">Roadtrip</a>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <div class="search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M11 19a8 8 0 100-16 8 8 0 000 16z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg><input placeholder="Search for artists, songs, or podcasts"/></div>
+        <div class="user"><div class="avatar">RG</div></div>
+      </div>
+
+      <section class="hero">
+        <div class="cover">PLAYLIST</div>
+        <div class="playlist-meta">
+          <div class="meta-type">PLAYLIST</div>
+          <div class="meta-title">Chill Vibes</div>
+          <div class="meta-desc">A collection of smooth, relaxing tracks to help you focus, unwind or ride the sunset. Updated weekly with new discoveries.</div>
+          <div class="controls">
+            <button class="btn">Play</button>
+            <button class="btn secondary">Shuffle</button>
+            <button class="btn secondary">Follow</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="tracks">
+        <div class="header"><div>#</div><div>Title</div><div>Album</div><div>Duration</div></div>
+
+        <!-- sample track rows -->
+        <div class="track">
+          <div>1</div>
+          <div class="title"><div class="thumb">AB</div><div><div class="song">Aurora Bloom</div><small>Artist Name</small></div></div>
+          <div>Sunset EP</div>
+          <div>3:42</div>
+        </div>
+
+        <div class="track">
+          <div>2</div>
+          <div class="title"><div class="thumb">LX</div><div><div class="song">Lantern</div><small>Another Artist</small></div></div>
+          <div>Midnight Tales</div>
+          <div>4:05</div>
+        </div>
+
+        <div class="track">
+          <div>3</div>
+          <div class="title"><div class="thumb">CM</div><div><div class="song">Calm Mind</div><small>Dreamer</small></div></div>
+          <div>Ocean Breath</div>
+          <div>2:58</div>
+        </div>
+
+      </section>
+
+      <section class="albums">
+        <h3>Fans also like</h3>
+        <div class="album-grid">
+          <div class="album"><div class="art"></div><div class="meta"><strong>Late Night</strong><small>Various artists</small></div></div>
+          <div class="album"><div class="art"></div><div class="meta"><strong>Acoustic Moods</strong><small>Guitarists</small></div></div>
+          <div class="album"><div class="art"></div><div class="meta"><strong>Lo-Fi Study</strong><small>Beats Lab</small></div></div>
+          <div class="album"><div class="art"></div><div class="meta"><strong>Sunrise</strong><small>Chill Collective</small></div></div>
+        </div>
+      </section>
+
+    </main>
+
+    <div class="player">
+      <div class="player-left"><div class="info"><div class="thumb" style="width:48px;height:48px">AB</div><div><div style="font-weight:700">Aurora Bloom</div><small style="color:var(--muted)">Artist Name</small></div></div></div>
+      <div class="player-center"><div style="display:flex;align-items:center;gap:8px"><button class="btn secondary">⏮</button><button class="btn">⏯</button><button class="btn secondary">⏭</button></div><div class="progress" style="margin-left:18px"><div class="bar"></div></div></div>
+      <div class="player-right"><div>🔁</div><div>🔀</div><div>🔊</div></div>
+    </div>
+
+  </div>
+</body>
+</html>
