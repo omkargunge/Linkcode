@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class ArrayOperationMain {
+public class array {
     public static void main(String[] args) {
 
         String str = null;
