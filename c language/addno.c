@@ -3,7 +3,7 @@
 int main (){
     int num1,num2,add;
 
-    printf("enter the any two number");
+    printf("enter the any two numbers");
     scanf("%d%d",&num1,&num2);
 
     add=num1+num2;
