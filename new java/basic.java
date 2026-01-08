@@ -5,7 +5,7 @@ class basic{
 
         Scanner sc=new Scanner(System.in);
 
-        System.out.println("enter your name");
+        System.out.println("Enter your name");
         String name=sc.next();
 
         System.out.println("enter your age");
