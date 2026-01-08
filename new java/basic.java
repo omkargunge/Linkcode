@@ -5,14 +5,14 @@ class basic{
 
         Scanner sc=new Scanner(System.in);
 
-        System.out.println("Enter your name");
+        System.out.println("Enter Your Name");
         String name=sc.next();
 
-        System.out.println("enter your age");
+        System.out.println("Enter Your Age");
         int age=sc.nextInt();
 
         System.out.println("Name:"+name);
-        System.out.println(age>18?"eligibal to vote":"not eligibal to vote");
+        System.out.println(age>18?"Eligibal To Vote":"Not Eligibal To Vote");
 
     }
 }
