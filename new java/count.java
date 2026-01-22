@@ -10,7 +10,7 @@ class count {
         String str=sc.nextLine();// how ate you
         String count[]=str.split(" ");
         System.out.println(Arrays.toString(count));
-        System.out.println("count of words:"+count.length);
+        System.out.println("count of words:"+count.length); 
 
 
     }
