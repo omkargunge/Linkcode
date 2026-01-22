@@ -23,7 +23,8 @@ class strreverse {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter One Sentence:");
         String str = sc.nextLine();
-        
+        StringBuffer rev = new StringBuffer(str);
+        rev.reverse();
         String count[] = str.split(" ");
         String rev="";
         for(String word:count){
@@ -32,7 +33,7 @@ class strreverse {
         }
         rev+=" ";
         
-        System.out.println("reverse words: "  + rev);
+        System.out.println("reverse words: " + rev);
         
     
     }
