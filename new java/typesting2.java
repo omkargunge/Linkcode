@@ -4,15 +4,30 @@ public class typesting2 {
         char x='o';
         
         
-        //narrowing
-        int a=(int)x;
+        //widening
+        int a=x;
         System.out.println(a);
-        //narrowing
-        float b=(float)x;
+        //widening
+        float b=x;
         System.out.println(b);
         //narrowing
         byte c=(byte)x;
         System.out.println(c);
+
+
+            double marks=78.90;
+            //all are narrowing
+            long l=(long)marks;
+            System.out.println(l);
+
+            int i=(int)marks;
+            System.out.println(i);
+
+            char ch=(char)marks;
+            System.out.println(ch);
+
+             
+
 
 
 
