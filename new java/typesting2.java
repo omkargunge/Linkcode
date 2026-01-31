@@ -3,6 +3,7 @@ public class typesting2 {
         
         char x='o';
         
+        
         //narrowing
         int a=(int)x;
         System.out.println(a);
@@ -15,7 +16,7 @@ public class typesting2 {
 
 
 
-    
+        
 
     }
     
