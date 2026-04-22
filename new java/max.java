@@ -1,6 +1,8 @@
 import java.util.Scanner;
+public class max {
+     
 
-class Main {
+
 
 
 
@@ -31,7 +33,3 @@ System.out.println("maximum value:"+max);
 }
 
 
-
-    
-}
-}
