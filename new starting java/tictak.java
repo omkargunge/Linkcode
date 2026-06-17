@@ -40,7 +40,7 @@ class tictak{
             // ---------------- TAKE INPUT ----------------
             System.out.println("Current Player: " + currentPlayer);
 
-            System.out.print("Enter Row Number (1-3): ");
+            System.out.print("Enter The Row Number (1-3): ");
             int row = sc.nextInt();
 
             System.out.print("Enter Column Number (1-3): ");
