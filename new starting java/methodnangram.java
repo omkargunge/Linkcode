@@ -37,3 +37,25 @@ public class methodnangram {
         }
     }
 }
+
+
+
+//tracing code
+
+
+// public static int test(int a, int b) {
+//     System.out.println(a + b);
+//     a += b;
+//     return a + b;
+// }
+
+// public static void main(String[] args) {
+//     System.out.println("main method");
+//     int a = 10, b = 20;
+//     int c = 30;
+//     int d = test(c, a);
+//     System.out.println(test(c, a));
+//     c += a;
+//     System.out.println(test(a, c));
+//     System.out.println(a + c + d);
+// }
