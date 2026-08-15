@@ -47,7 +47,7 @@ public class car implements Engine, Musicsystem {
 
 		int choice = sc.nextInt();
 		if (choice == 1) {
-			System.out.println("ENTER SONG NAME");
+			System.out.println("ENTER SONG THE NAME");
 			String song = sc.next();
 			MusicOn(song);
 		}
