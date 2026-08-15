@@ -11,7 +11,7 @@ public class areaofcircle {
         double area=3.14*r*r;
 
 
-        System.out.println("area of circle:" +area);
+        System.out.println("area of the circle:" +area);
 
     }
 }
