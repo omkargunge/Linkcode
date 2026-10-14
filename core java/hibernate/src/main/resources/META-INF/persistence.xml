@@ -18,6 +18,9 @@
         <class>com.linkcode.hibernateManyToOne.DepartmentDTO</class>
 <class>com.linkcode.hibernateManyToOne.EmployeeDTO</class>
 
+	<class>com.linkcode.hibernateManyToMany.Customer</class>
+<class>com.linkcode.hibernateManyToMany.Product</class>
+
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
 
         <properties>
