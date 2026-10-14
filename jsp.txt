@@ -1,0 +1,1066 @@
+JustPaste.it
+User avatar
+@anonymous · 3m
+Quiz APP
+------------------------------------------
+QuizApplication/
+│
+├── index.jsp
+├── quiz.jsp
+├── result.jsp
+├── history.jsp
+│
+└── WEB-INF/
+    └── web.xml
+--------------------------------------------
+CREATE DATABASE quiz_db;
+ 
+USE quiz_db;
+ 
+CREATE TABLE questions (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    question TEXT NOT NULL,
+    option_a VARCHAR(255) NOT NULL,
+    option_b VARCHAR(255) NOT NULL,
+    option_c VARCHAR(255) NOT NULL,
+    option_d VARCHAR(255) NOT NULL,
+    correct_answer CHAR(1) NOT NULL
+);
+ 
+questions -
+1  founder of java?  jamesgosling abc xyz dsfgh jamesgosling
+ 
+ 
+CREATE TABLE quiz_results (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(100) NOT NULL,
+    score INT NOT NULL,
+    total_questions INT NOT NULL,
+    attempted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+ 
+id username score totalQuestion attem
+-----------------------------------------
+INSERT INTO questions
+(question, option_a, option_b, option_c, option_d, correct_answer)
+VALUES
+(
+ 'Which language is used for JSP?',
+ 'Java', 'Python', 'C++', 'PHP', 'A'
+),
+(
+ 'Which keyword is used to inherit a class in Java?',
+ 'implements', 'extends', 'inherits', 'super', 'B'
+),
+(
+ 'Which database are we using?',
+ 'MongoDB', 'Oracle', 'MySQL', 'Redis', 'C'
+),
+(
+ 'Which method executes a SELECT query in JDBC?',
+ 'executeQuery()', 'executeUpdate()', 'execute()', 'runQuery()', 'A'
+),
+(
+ 'What does JSP stand for?',
+ 'Java Server Pages',
+ 'Java Simple Pages',
+ 'Java Service Program',
+ 'Java Script Pages',
+ 'A'
+);
+------------------------------------------
+index.jsp styling
+-------------------------------------------
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+    <title>Online Quiz</title>
+ 
+    <style>
+        /* Reset */
+        * {
+            0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+ 
+        /* Page background */
+        body {
+            Arial, Helvetica, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+ 
+            background: linear-gradient(
+                135deg,
+                #667eea,
+                #764ba2
+            );
+        }
+ 
+        /* Main quiz card */
+        .quiz-container {
+            width: 400px;
+            background-color: white;
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+ 
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+        }
+ 
+        /* Heading */
+        h1 {
+            color: #333;
+            font-size: 28px;
+            30px;
+        }
+ 
+        /* Label */
+        label {
+            display: block;
+            text-align: left;
+            font-size: 16px;
+            font-weight: bold;
+            color: #555;
+            8px;
+        }
+ 
+        /* Username input */
+        input[type="text"] {
+            width: 100%;
+            padding: 12px 15px;
+ 
+            border: 2px solid #ddd;
+            border-radius: 8px;
+ 
+            font-size: 16px;
+            outline: none;
+ 
+            transition: 0.3s;
+        }
+ 
+        /* Input focus effect */
+        input[type="text"]:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 5px rgba(102, 126, 234, 0.4);
+        }
+ 
+        /* Start Quiz button */
+        button {
+            width: 100%;
+            padding: 13px;
+ 
+            border: none;
+            border-radius: 8px;
+ 
+            background-color: #667eea;
+            color: white;
+ 
+            font-size: 17px;
+            font-weight: bold;
+ 
+            cursor: pointer;
+            transition: 0.3s;
+        }
+ 
+        /* Button hover */
+        button:hover {
+            background-color: #5568d9;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+ 
+        /* Previous scores link */
+        .history-link {
+            display: inline-block;
+            20px;
+ 
+            color: #667eea;
+            text-decoration: none;
+ 
+            font-size: 15px;
+            font-weight: bold;
+ 
+            transition: 0.3s;
+        }
+ 
+        .history-link:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+ 
+        /* Mobile responsive design */
+        @media (max-width: 500px) {
+            .quiz-container {
+                width: 90%;
+                padding: 30px 25px;
+            }
+ 
+            h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+ 
+<body>
+ 
+    <div class="quiz-container">
+ 
+        <h1>Online Quiz Application</h1>
+ 
+        <form action="quiz.jsp" method="get">
+ 
+            <label for="username">
+                Enter Your Name:
+            </label>
+ 
+            <input
+                type="text"
+                id="username"
+                name="username"
+                placeholder="Enter your name"
+                required
+            >
+ 
+            <br><br>
+ 
+            <button type="submit">
+                Start Quiz
+            </button>
+ 
+        </form>
+ 
+        <a href='' class="history-link">
+            View Previous Scores
+        </a>
+ 
+    </div>
+ 
+</body>
+ 
+</html>
+---------------------------------------------
+Quiz.jsp 
+---------------------------------------------
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+ 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+    <title>Quiz</title>
+ 
+    <style>
+ 
+        /* Reset */
+        * {
+            0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+ 
+        /* Page */
+        body {
+            Arial, Helvetica, sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+ 
+        /* Main quiz container */
+        .quiz-container {
+            max-width: 800px;
+            auto;
+            background-color: #ffffff;
+            padding: 35px;
+            border-radius: 15px;
+ 
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+        }
+ 
+        /* Page heading */
+        h2 {
+            text-align: center;
+            color: #333;
+            30px;
+            font-size: 28px;
+        }
+ 
+        /* Question card */
+        .question-card {
+            background-color: #f8f9ff;
+            border: 1px solid #e1e4f5;
+            border-radius: 12px;
+ 
+            padding: 22px;
+            20px;
+ 
+            transition: 0.3s;
+        }
+ 
+        /* Question hover effect */
+        .question-card:hover {
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.15);
+            border-color: #667eea;
+        }
+ 
+        /* Question text */
+        h3 {
+            color: #333;
+            font-size: 18px;
+            18px;
+            1.5;
+        }
+ 
+        /* Answer labels */
+        .option {
+            display: block;
+            background-color: white;
+            border: 1px solid #ddd;
+ 
+            padding: 12px 15px;
+            10px 0;
+ 
+            border-radius: 8px;
+            cursor: pointer;
+ 
+            color: #444;
+            font-size: 16px;
+ 
+            transition: 0.3s;
+        }
+ 
+        /* Option hover */
+        .option:hover {
+            background-color: #eef0ff;
+            border-color: #667eea;
+        }
+ 
+        /* Radio button */
+        .option input[type="radio"] {
+            10px;
+            accent-color: #667eea;
+            cursor: pointer;
+        }
+ 
+        /* Submit button */
+        .submit-btn {
+            display: block;
+            width: 100%;
+ 
+            padding: 14px;
+            25px;
+ 
+            border: none;
+            border-radius: 8px;
+ 
+            background-color: #667eea;
+            color: white;
+ 
+            font-size: 17px;
+            font-weight: bold;
+ 
+            cursor: pointer;
+            transition: 0.3s;
+        }
+ 
+        /* Submit button hover */
+        .submit-btn:hover {
+            background-color: #5568d9;
+            transform: translateY(-2px);
+ 
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+ 
+        /* Mobile responsive */
+        @media (max-width: 600px) {
+ 
+            body {
+                padding: 20px 10px;
+            }
+ 
+            .quiz-container {
+                padding: 20px;
+            }
+ 
+            h2 {
+                font-size: 23px;
+            }
+ 
+            h3 {
+                font-size: 16px;
+            }
+ 
+            .option {
+                font-size: 14px;
+            }
+        }
+ 
+    </style>
+ 
+</head>
+ 
+<body>
+ 
+ 
+ 
+<div class="quiz-container">
+ 
+    <h2>
+        Welcome, RAM 👋
+    </h2>
+ 
+    <form action="result.jsp" method="post">
+ 
+ 
+ 
+        <div class="question-card">
+ 
+            <h3>
+                1.Founder of Java
+              
+            </h3>
+ 
+            <label class="option">
+ 
+                <input type="radio"
+                       name="q"
+                       value="A"
+                       required>
+ 
+              abc
+ 
+            </label>
+ 
+            <label class="option">
+ 
+                <input type="radio"
+                       name="q"
+                       value="B">
+ 
+                xyz
+ 
+            </label>
+ 
+            <label class="option">
+ 
+                <input type="radio"
+                       name="q"
+                       value="C">
+ 
+               james gosling
+ 
+            </label>
+ 
+            <label class="option">
+ 
+                <input type="radio"
+                       name="q"
+                       value="D">
+ 
+                dennis ritchie
+ 
+            </label>
+ 
+        </div>
+ 
+ 
+ 
+        <!-- Send username to result.jsp -->
+ 
+        <input type="hidden"
+               name="username"
+               value="ram">
+ 
+        <button type="submit" class="submit-btn">
+            Submit Quiz
+        </button>
+ 
+    </form>
+ 
+</div>
+ 
+</body>
+ 
+</html>
+--------------------------------------------
+result.jsp
+---------------------------------------------
+ 
+ 
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+ 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+    <title>Quiz Result</title>
+ 
+    <style>
+ 
+        /* Reset */
+        * {
+            0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+ 
+        /* Page */
+        body {
+            Arial, Helvetica, sans-serif;
+            min-height: 100vh;
+ 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+ 
+            padding: 20px;
+ 
+            background: linear-gradient(
+                135deg,
+                #667eea,
+                #764ba2
+            );
+        }
+ 
+        /* Result Card */
+        .result-container {
+            width: 450px;
+            max-width: 100%;
+ 
+            background-color: white;
+ 
+            padding: 40px;
+ 
+            border-radius: 18px;
+ 
+            text-align: center;
+ 
+            box-shadow:
+                0 15px 35px rgba(0, 0, 0, 0.25);
+        }
+ 
+        /* Heading */
+        h1 {
+            color: #333;
+            font-size: 30px;
+            10px;
+        }
+ 
+        /* Subtitle */
+        .subtitle {
+            color: #777;
+            font-size: 16px;
+            30px;
+        }
+ 
+        /* Score Circle */
+        .score-circle {
+            width: 150px;
+            height: 150px;
+ 
+            0 auto 25px;
+ 
+            border-radius: 50%;
+ 
+            background: linear-gradient(
+                135deg,
+                #667eea,
+                #764ba2
+            );
+ 
+            display: flex;
+            flex-direction: column;
+ 
+            justify-content: center;
+            align-items: center;
+ 
+            color: white;
+ 
+            box-shadow:
+                0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+ 
+        .score {
+            font-size: 38px;
+            font-weight: bold;
+        }
+ 
+        .score-text {
+            font-size: 14px;
+            3px;
+        }
+ 
+        /* Result information */
+        .result-info {
+            background-color: #f8f9ff;
+ 
+            border: 1px solid #e1e4f5;
+ 
+            border-radius: 10px;
+ 
+            padding: 20px;
+ 
+            25px;
+        }
+ 
+        .result-info p {
+            color: #555;
+            font-size: 16px;
+            10px 0;
+        }
+ 
+        .result-info strong {
+            color: #333;
+        }
+ 
+        /* Message */
+        .message {
+            font-size: 18px;
+            font-weight: bold;
+ 
+            color: #667eea;
+ 
+            25px;
+        }
+ 
+        /* Buttons */
+        .btn {
+            display: block;
+ 
+            width: 100%;
+ 
+            padding: 13px;
+ 
+            12px;
+ 
+            border-radius: 8px;
+ 
+            text-decoration: none;
+ 
+            font-size: 16px;
+            font-weight: bold;
+ 
+            transition: 0.3s;
+        }
+ 
+        /* Try Again Button */
+        .try-again {
+            background-color: #667eea;
+            color: white;
+        }
+ 
+        .try-again:hover {
+            background-color: #5568d9;
+ 
+            transform: translateY(-2px);
+ 
+            box-shadow:
+                0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+ 
+        /* History Button */
+        .history {
+            background-color: #f1f1f1;
+            color: #555;
+        }
+ 
+        .history:hover {
+            background-color: #e2e2e2;
+        }
+ 
+        /* Mobile */
+        @media (max-width: 500px) {
+ 
+            .result-container {
+                padding: 30px 20px;
+            }
+ 
+            h1 {
+                font-size: 25px;
+            }
+ 
+            .score-circle {
+                width: 130px;
+                height: 130px;
+            }
+ 
+            .score {
+                font-size: 32px;
+            }
+        }
+ 
+    </style>
+ 
+</head>
+ 
+<body>
+ 
+<div class="result-container">
+ 
+    <h1>Quiz Completed! 🎉</h1>
+ 
+    <p class="subtitle">
+        Here is your quiz result
+    </p>
+ 
+ 
+    <!-- Score Circle -->
+ 
+    <div class="score-circle">
+ 
+        <div class="score">
+           98%
+        </div>
+ 
+        <div class="score-text">
+            Score
+        </div>
+ 
+    </div>
+ 
+ 
+    <!-- Result Information -->
+ 
+    <div class="result-info">
+ 
+        <p>
+            <strong>Student:</strong>
+            RAM
+        </p>
+ 
+        <p>
+            <strong>Correct Answers:</strong>
+            98
+        </p>
+ 
+        <p>
+            <strong>Total Questions:</strong>
+           100
+        </p>
+ 
+        <p>
+            <strong>Percentage:</strong>
+           98%
+        </p>
+ 
+    </div>
+ 
+ 
+    <!-- Result Message -->
+ 
+    <div class="message">
+        Excellent! 🎉 Great Job! 👍 Good Effort! 🙂
+    </div>
+ 
+ 
+    <!-- Buttons -->
+ 
+    <a href='' class="btn try-again">
+        Take Quiz Again
+    </a>
+ 
+    <a href='' class="btn history">
+        View Previous Scores
+    </a>
+ 
+</div>
+ 
+ 
+</body>
+ 
+</html>
+--------------------------------------------
+history.jsp
+---------------------------------------------
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+ 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+    <title>Quiz History</title>
+ 
+    <style>
+ 
+        /* Reset */
+        * {
+            0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+ 
+        /* Page */
+        body {
+            Arial, Helvetica, sans-serif;
+ 
+            min-height: 100vh;
+ 
+            padding: 40px 20px;
+ 
+            background: linear-gradient(
+                135deg,
+                #667eea,
+                #764ba2
+            );
+        }
+ 
+        /* Main container */
+        .history-container {
+            max-width: 1000px;
+ 
+            0 auto;
+ 
+            background-color: white;
+ 
+            padding: 35px;
+ 
+            border-radius: 18px;
+ 
+            box-shadow:
+                0 15px 35px rgba(0, 0, 0, 0.25);
+        }
+ 
+        /* Heading */
+        h1 {
+            text-align: center;
+ 
+            color: #333;
+ 
+            font-size: 30px;
+ 
+            30px;
+        }
+ 
+        /* Table wrapper */
+        .table-wrapper {
+            width: 100%;
+ 
+            overflow-x: auto;
+        }
+ 
+        /* Table */
+        table {
+            width: 100%;
+ 
+            border-collapse: collapse;
+ 
+            overflow: hidden;
+ 
+            border-radius: 10px;
+ 
+            background-color: white;
+        }
+ 
+        /* Table heading */
+        th {
+            background-color: #667eea;
+ 
+            color: white;
+ 
+            padding: 15px;
+ 
+            text-align: center;
+ 
+            font-size: 15px;
+        }
+ 
+        /* Table cells */
+        td {
+            padding: 14px;
+ 
+            text-align: center;
+ 
+            color: #444;
+ 
+            border-bottom: 1px solid #e5e5e5;
+ 
+            font-size: 15px;
+        }
+ 
+        /* Alternate rows */
+        tbody tr:nth-child(even) {
+            background-color: #f8f9ff;
+        }
+ 
+        /* Row hover */
+        tbody tr:hover {
+            background-color: #eef0ff;
+ 
+            transition: 0.2s;
+        }
+ 
+        /* Score column */
+        .score {
+            font-weight: bold;
+ 
+            color: #667eea;
+        }
+ 
+        /* Back button */
+        .back-btn {
+            display: block;
+ 
+            width: 200px;
+ 
+            30px auto 0;
+ 
+            padding: 13px;
+ 
+            text-align: center;
+ 
+            text-decoration: none;
+ 
+            background-color: #667eea;
+ 
+            color: white;
+ 
+            border-radius: 8px;
+ 
+            font-size: 16px;
+ 
+            font-weight: bold;
+ 
+            transition: 0.3s;
+        }
+ 
+        /* Back button hover */
+        .back-btn:hover {
+            background-color: #5568d9;
+ 
+            transform: translateY(-2px);
+ 
+            box-shadow:
+                0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+ 
+        /* Mobile responsive */
+        @media (max-width: 600px) {
+ 
+            body {
+                padding: 20px 10px;
+            }
+ 
+            .history-container {
+                padding: 20px 15px;
+            }
+ 
+            h1 {
+                font-size: 24px;
+            }
+ 
+            th,
+            td {
+                padding: 10px 8px;
+ 
+                font-size: 13px;
+            }
+ 
+            .back-btn {
+                width: 100%;
+            }
+        }
+ 
+    </style>
+ 
+</head>
+ 
+<body>
+ 
+ 
+<div class="history-container">
+ 
+    <h1>
+        📊 Previous Quiz Scores
+    </h1>
+ 
+ 
+    <div class="table-wrapper">
+ 
+        <table>
+ 
+            <thead>
+ 
+                <tr>
+ 
+                    <th>ID</th>
+ 
+                    <th>Username</th>
+ 
+                    <th>Score</th>
+ 
+                    <th>Total Questions</th>
+ 
+                    <th>Date</th>
+ 
+                </tr>
+ 
+            </thead>
+ 
+ 
+            <tbody>
+ 
+                <tr>
+ 
+                    <td>
+                        1
+                    </td>
+ 
+                    <td>
+                        ram
+                    </td>
+ 
+                    <td class="score">
+                        98
+                    </td>
+ 
+                    <td>
+                       100
+                    </td>
+ 
+                    <td>
+                        10.00
+                    </td>
+ 
+                </tr>
+ 
+ 
+            </tbody>
+ 
+        </table>
+ 
+    </div>
+ 
+ 
+    <a href='' class="back-btn">
+        ← Back to Quiz
+    </a>
+ 
+</div>
+ 
+ 
+</body>
+ 
+</html>
+13 visits · 13 online
+  
+© 2026 JustPaste.it
+Account
+Terms
+Privacy
+Cookies
+Blog
+About
