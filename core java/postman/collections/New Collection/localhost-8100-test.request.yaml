@@ -1,0 +1,19 @@
+$kind: http-request
+name: localhost:8100/test
+description: ""
+url: localhost:8100/test
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: "{\r
+
+    \    \"id\":2,\r
+
+    \    \"name\":\"omkar\",\r
+
+    \    \"marks\":99.90\r
+
+    }"
+order: 1000
